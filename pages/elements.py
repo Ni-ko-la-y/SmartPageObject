@@ -25,6 +25,7 @@ class WebElement(object):
         for attr in kwargs:
             self._locator = (str(attr).replace('_', ' '), str(kwargs.get(attr)))
 
+    """Поиск элементов на странице"""
     def find(self, timeout=10):
         """ Find element on the page. """
 
@@ -39,6 +40,7 @@ class WebElement(object):
 
         return element
 
+    """Ждать состояния кликабельности"""
     def wait_to_be_clickable(self, timeout=10, check_visibility=True):
         """ Wait until the element will be ready for click. """
 
@@ -56,18 +58,21 @@ class WebElement(object):
 
         return element
 
+    """Проверить возможность нажатия"""
     def is_clickable(self):
         """ Check is element ready for click or not. """
 
         element = self.wait_to_be_clickable(timeout=0.1)
         return element is not None
 
+    """Проверить наличие элемента"""
     def is_presented(self):
         """ Check that element is presented on the page. """
 
         element = self.find(timeout=0.1)
         return element is not None
 
+    """Проверить видимость элемента"""
     def is_visible(self):
         """ Check is the element visible or not. """
 
@@ -78,6 +83,7 @@ class WebElement(object):
 
         return False
 
+    """Ждать, пока элемент будет невидим"""
     def wait_until_not_visible(self, timeout=10):
 
         element = None
@@ -107,6 +113,7 @@ class WebElement(object):
 
         return element
 
+    """Ввести текстовые данные в элемент"""
     def send_keys(self, keys, wait=2):
         """ Send keys to the element. """
 
@@ -123,6 +130,7 @@ class WebElement(object):
             msg = 'Element with locator {0} not found'
             raise AttributeError(msg.format(self._locator))
 
+    """Получить текстовое содержимое"""
     def get_text(self):
         """ Get text of the element. """
 
@@ -136,6 +144,7 @@ class WebElement(object):
 
         return text
 
+    """Получить атрибут тега"""
     def get_attribute(self, attr_name):
         """ Get attribute of the element. """
 
@@ -144,6 +153,7 @@ class WebElement(object):
         if element:
             return element.get_attribute(attr_name)
 
+    """Установить значение входящего элемента"""
     def _set_value(self, web_driver, value, clear=True):
         """ Set value to the input element. """
 
@@ -154,6 +164,7 @@ class WebElement(object):
 
         element.send_keys(value)
 
+    """Кликнуть по элементу"""
     def click(self, hold_seconds=0, x_offset=1, y_offset=1):
         """ Wait and click the element. """
 
@@ -170,6 +181,7 @@ class WebElement(object):
         if self._wait_after_click:
             self._page.wait_page_loaded()
 
+    """Правый клик мыши"""
     def right_mouse_click(self, x_offset=0, y_offset=0, hold_seconds=0):
         """ Click right mouse button on the element. """
 
@@ -183,6 +195,7 @@ class WebElement(object):
             msg = 'Element with locator {0} not found'
             raise AttributeError(msg.format(self._locator))
 
+    """Сделать контрастность и скриншот"""
     def highlight_and_make_screenshot(self, file_name='element.png'):
         """ Highlight element and make the screen-shot of all page. """
 
@@ -197,6 +210,7 @@ class WebElement(object):
         # Make screen-shot of the page:
         self._web_driver.save_screenshot(file_name)
 
+    """Прокрутить до элемента"""
     def scroll_to_element(self):
         """ Scroll page to the element. """
 
@@ -212,6 +226,7 @@ class WebElement(object):
         except Exception as e:
             pass  # Just ignore the error if we can't send the keys to the element
 
+    """Удалить элемент"""
     def delete(self):
         """ Deletes element from the page. """
 

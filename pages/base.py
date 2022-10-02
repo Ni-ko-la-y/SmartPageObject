@@ -10,7 +10,6 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 class WebPage(object):
-
     _web_driver = None
 
     def __init__(self, web_driver, url=''):
@@ -32,20 +31,30 @@ class WebPage(object):
 
         return attr
 
+    """Открытие страницы"""
+
     def get(self, url):
         self._web_driver.get(url)
         self.wait_page_loaded()
+
+    """Возврат на предыдущую страницу"""
 
     def go_back(self):
         self._web_driver.back()
         self.wait_page_loaded()
 
+    """Перегрузить страницу"""
+
     def refresh(self):
         self._web_driver.refresh()
         self.wait_page_loaded()
 
+    """Сделать скриншот"""
+
     def screenshot(self, file_name='screenshot.png'):
         self._web_driver.save_screenshot(file_name)
+
+    """Прокрутка вниз"""
 
     def scroll_down(self, offset=0):
         """ Scroll the page down. """
@@ -55,6 +64,8 @@ class WebPage(object):
         else:
             self._web_driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
 
+    """Прокрутка вверх"""
+
     def scroll_up(self, offset=0):
         """ Scroll the page up. """
 
@@ -63,20 +74,27 @@ class WebPage(object):
         else:
             self._web_driver.execute_script('window.scrollTo(0, -document.body.scrollHeight);')
 
+    """Переключиться во фрейм"""
+
     def switch_to_iframe(self, iframe):
         """ Switch to iframe by it's name. """
 
         self._web_driver.switch_to.frame(iframe)
 
+    """Выйти из фрейма"""
+
     def switch_out_iframe(self):
         """ Cancel iframe focus. """
         self._web_driver.switch_to.default_content()
+
+    """Получить адрес текущей страницы"""
 
     def get_current_url(self):
         """ Returns current browser URL. """
 
         return self._web_driver.current_url
 
+    """Выдать исходный код страницы"""
     def get_page_source(self):
         """ Returns current page body. """
 
@@ -88,6 +106,7 @@ class WebPage(object):
 
         return source
 
+    """Проверить наличие ошибок в JavaScript коде"""
     def check_js_errors(self, ignore_list=None):
         """ This function checks JS errors on the page. """
 
@@ -104,6 +123,7 @@ class WebPage(object):
 
                 assert ignore, 'JS error "{0}" on the page!'.format(log_message)
 
+    """Ждать загрузки"""
     def wait_page_loaded(self, timeout=60, check_js_complete=True,
                          check_page_changes=False, check_images=False,
                          wait_for_element=None,
